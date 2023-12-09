@@ -6,9 +6,6 @@ class Solution {
      * @return Boolean
      */
     function arrayStringsAreEqual($word1, $word2) {
-        $word1String = implode('', $word1);
-        $word2String = implode('', $word2);
-
-        return $word1String === $word2String;
+        return implode('', $word1) === implode('', $word2);
     }
 }
