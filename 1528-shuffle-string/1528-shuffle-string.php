@@ -9,9 +9,7 @@ class Solution {
         $arrayShuffled = array_fill(0, count($indices), "");
 
         foreach($indices as $key => $position)
-        {
             $arrayShuffled[$position] = $s[$key];
-        }
 
         return implode("", $arrayShuffled);
     }
