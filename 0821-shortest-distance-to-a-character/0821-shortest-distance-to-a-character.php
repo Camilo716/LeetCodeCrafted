@@ -6,41 +6,58 @@ class Solution {
      * @return Integer[]
      */
     function shortestToChar($s, $c) {
-        $answer = [];
+        $shortestDistancesToRight = $this->getShortestDistancesToRight($c, $s, PHP_INT_MAX);
+        $shortestDistancesToLeft = $this->getShortestDistancesToLeft($c, $s, PHP_INT_MAX);
 
-        foreach(str_split($s) as $index => $char)
-        {
-            $shortestDistanceToRight = $this->getShortestDistanceToRight($index, $c, $s);
-            $shortestDistanceToLeft = $this->getShortestDistanceToLeft($index, $c, $s);
-
-            $answer[] = min([$shortestDistanceToRight, $shortestDistanceToLeft]);
-        }
-
-        return $answer;
+        return array_map('min', $shortestDistancesToRight, $shortestDistancesToLeft);
     }
 
-    function getShortestDistanceToRight($needleIndex, $needle, $haystack)
+    function getShortestDistancesToRight($needle, $haystack, $placeholder="#")
     {
-        for($i = $needleIndex; $i < strlen($haystack); $i++)
+        $shortestDistancesToRight = [];
+        $previousCoincidenceIndex = $placeholder;
+
+        for($i = strlen($haystack) - 1; $i >= 0; $i--)
         {
-            if($needle == $haystack[$i])
+            if($haystack[$i] == $needle)
             {
-                return $i - $needleIndex;
+                array_unshift($shortestDistancesToRight , 0);
+                $previousCoincidenceIndex = 0;
+                continue; 
             }
+
+            $previousCoincidenceIndex--;
+            array_unshift($shortestDistancesToRight, abs($previousCoincidenceIndex));
         }
-        return PHP_INT_MAX;
+
+        return $shortestDistancesToRight;
     }
 
-    function getShortestDistanceToLeft($needleIndex, $needle, $haystack)
+    function getShortestDistancesToLeft($needle, $haystack, $placeholder="#")
     {
-        for($i = $needleIndex; $i >= 0; $i--)
+        $shortestDistancesToLeft = [];
+        $previousCoincidenceIndex = $placeholder;
+
+        for($i = 0; $i < strlen($haystack); $i++)
         {
-            if($needle == $haystack[$i])
+            if($haystack[$i] == $needle)
             {
-                return $needleIndex - $i;
+                $shortestDistancesToLeft[] = 0;
+                $previousCoincidenceIndex = 0;
+                continue; 
             }
+
+            $notYetFoundCoincidence = $previousCoincidenceIndex === $placeholder;
+            if($notYetFouncCoincidence)
+            {
+               $shortestDistancesToLeft[] = $placeholder;
+               continue; 
+            }
+
+            $previousCoincidenceIndex++;
+            $shortestDistancesToLeft[] = $previousCoincidenceIndex;
         }
 
-        return PHP_INT_MAX;
+        return $shortestDistancesToLeft;
     }
 }
