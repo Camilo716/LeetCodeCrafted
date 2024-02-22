@@ -1,5 +1,6 @@
 public class Solution {
     public string DefangIPaddr(string address) {
-        return string.Join("[.]", address.Split('.'));
+        string[] ipBytes = address.Split('.');
+        return string.Join("[.]", ipBytes);
     }
 }
