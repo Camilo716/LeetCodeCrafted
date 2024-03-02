@@ -8,11 +8,6 @@ public class Solution {
 
         foreach(char c in message)
         {
-            if(c == ' ') 
-            {
-                decoded.Append(' ');
-                continue; 
-            }
             decoded.Append(decodingMap[c]);
         }
 
@@ -21,12 +16,12 @@ public class Solution {
 
     private void BuildDecodingMap(string key)
     {
+        decodingMap.Add(' ', ' ');
         int alphabetPointer = 0;
 
         foreach(char c in key)
         {
-            bool keyExists = decodingMap.ContainsKey(c);
-            if(keyExists || c == ' ') continue;
+            if(decodingMap.ContainsKey(c)) continue;
 
             decodingMap.Add(c, _alphabet[alphabetPointer]);
             alphabetPointer++;
