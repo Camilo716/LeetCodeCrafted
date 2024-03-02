@@ -6,14 +6,14 @@ public class Solution {
         BuildDecodingMap(key);
         StringBuilder decoded = new();
 
-        for(int i = 0; i < message.Length; i++)
+        foreach(char c in message)
         {
-            if(message[i] == ' ') 
-            { 
+            if(c == ' ') 
+            {
                 decoded.Append(' ');
                 continue; 
             }
-            decoded.Append(decodingMap[message[i]]);
+            decoded.Append(decodingMap[c]);
         }
 
         return decoded.ToString();
@@ -23,12 +23,12 @@ public class Solution {
     {
         int alphabetPointer = 0;
 
-        for(int i = 0; i < key.Length; i++)
+        foreach(char c in key)
         {
-            if(key[i] == ' ') continue;
-            if(decodingMap.ContainsKey(key[i])) continue;
+            bool keyExists = decodingMap.ContainsKey(c);
+            if(keyExists || c == ' ') continue;
 
-            decodingMap.Add(key[i], _alphabet[alphabetPointer]);
+            decodingMap.Add(c, _alphabet[alphabetPointer]);
             alphabetPointer++;
         }
     }
