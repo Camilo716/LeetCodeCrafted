@@ -1,26 +1,19 @@
 public class Solution {
-   public int[] TwoSum(int[] nums, int target) {
-        
-        var result = new List<int>();
+    public int[] TwoSum(int[] nums, int target) {
+        Dictionary<int, int> numIndices = new();
 
-        for (int i = 0; i < nums.Length; i++)
+        for(int i = 0; i < nums.Length; i++)
         {
-            for (int j = i+1; j < nums.Length; j++)
+            int complement = target - nums[i];
+
+            if(numIndices.ContainsKey(complement))
             {
-                var currNum = nums[i];
-                var nextNum = nums[j];
-
-                bool expectedResult = currNum + nextNum == target;
-
-                if (expectedResult)
-                {
-                    result.Add(i);
-                    result.Add(j);
-                    return result.ToArray();
-                }
+                return new int[] { numIndices[complement], i };
             }
+
+            numIndices[nums[i]] = i;
         }
 
-        return result.ToArray();
+        throw new InvalidOperationException();
     }
 }
