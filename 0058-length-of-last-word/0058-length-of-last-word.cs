@@ -1,11 +1,10 @@
 public class Solution {
     public int LengthOfLastWord(string s) {
-        const string space = " ";
+        string lastWord = s
+            .Split(' ')
+            .Where(x => !string.IsNullOrWhiteSpace(x))
+            .LastOrDefault();
 
-        return s
-            .Trim()
-            .Split(space)
-            .Last()
-            .Length;
+        return lastWord?.Length ?? 0;
     }
 }
